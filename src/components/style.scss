@@ -1,0 +1,32 @@
+.character {
+    display: flex;
+
+    &__navigation {}
+
+    &__img-wrap {
+        cursor: pointer;
+    }
+}
+
+.page-link.active {
+    background-color: blue;
+    color: white;
+}
+
+.nav-container {
+    background-color: #e3f2fd;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .8);
+
+    &.active {
+        display: block;
+    }
+}
