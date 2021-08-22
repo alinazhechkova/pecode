@@ -10,6 +10,8 @@ export const Episodes = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageNumber, setPageNumber] = useState(34)
     const [name, setName] = useState({});
+    const [error, setError] = useState(null);
+    const [episode, setEpisode] = useState('')
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
@@ -19,28 +21,39 @@ export const Episodes = () => {
         for (let item in filters) {
             addParams.push(`${item}=${filters[item]}`)
         }
-        return `https://rickandmortyapi.com/api/episode/?` + addParams.join('&');
+
+        return `https://rickandmortyapi.com/api/episode//?` + addParams.join('&');
     }
     let url = parsingQuery()
     useEffect(() => {
-        const fetchCharacters = async () => {
-
+        fetch(url).then(res => res.json()).then((res) => {
+            if (!res.error) {
+                setLoading(true);
+                setPageNumber(res.info.pages);
+                setEpisodes(res);
+            }
+        }, (error) => {
             setLoading(true);
-            const res = await axios.get(url);
-            setPageNumber(res.data.info.pages);
-
-            setEpisodes(res.data);
-            setLoading(false);
-        }
-        fetchCharacters();
+            setError(error)
+        })
     }, [url, currentPage]);
 
-    return (
-        <div className="container mt-5">
-            <h1 className="text-primary mb-3">Episodes</h1>
-            <FilterEpisode setName={setName} setCurrentPage={setCurrentPage} />
-            <EpisodeList episodes={episodes.results} loading={loading} />
-            <Pagination currentPage={currentPage} paginate={paginate} url={url} number={pageNumber} />
-        </div>
-    )
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    } else if (!loading) {
+        return <div>Loading...</div>;
+    } else {
+        return (
+            <div className="page__episodes section">
+                <div className="container">
+                    <h1 className="text-primary">Episodes</h1>
+                    <FilterEpisode episode={episode} setEpisode={setEpisode} setName={setName} setCurrentPage={setCurrentPage} />
+                    <EpisodeList episodes={episodes.results} loading={loading} />
+                    <Pagination currentPage={currentPage} paginate={paginate} url={url} number={pageNumber} />
+                </div>
+            </div>
+
+        );
+    }
+
 }

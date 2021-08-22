@@ -5,11 +5,15 @@ export const FilterStatus = ({ setStatus, status, setCurrentPage, url }) => {
         setCurrentPage(1)
     };
     return (
-        <select value={status} onChange={handleChange}>
-            <option defaultValue value="">Choose status</option>
-            <option value="alive">Alive</option>
-            <option value="dead">Dead</option>
-            <option value="unknown">Unknown</option>
-        </select>
+
+        <div className="filter-select" onChange={handleChange}>
+            <select value={status}>
+                <option defaultValue value="">Choose status</option>
+                <option value="alive">Alive</option>
+                <option value="dead">Dead</option>
+                <option value="unknown">Unknown</option>
+            </select>
+        </div >
+
     )
 }

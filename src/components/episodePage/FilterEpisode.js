@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react';
 
-export const FilterEpisode = ({ setName, setCurrentPage }) => {
+export const FilterEpisode = ({ episode, setEpisode, setName, setCurrentPage }) => {
+
     return (
-        <Fragment>
-            <input type="text" placeholder="Episode name" id="name" onInput={(e) => {
+        <label className="filter-label">Name:
+            <input type="text" className="filter-input" placeholder="Episode name" id="name" onInput={(e) => {
                 setName({ name: e.target.value });
                 setCurrentPage(1)
             }} />
-        </Fragment>
+        </label>
+
 
     )
 }

@@ -11,6 +11,7 @@ export const Characters = () => {
     const [pageNumber, setPageNumber] = useState(34)
     const [gender, setGender] = useState({});
     const [status, setStatus] = useState({});
+    const [error, setError] = useState(null)
     const [species, setSpecies] = useState({});
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -25,24 +26,46 @@ export const Characters = () => {
     }
     let url = parsingQuery()
     useEffect(() => {
+        fetch(url).then(res => res.json()).then((res) => {
+            if (!res.error) {
+                setLoading(true);
+                setPageNumber(res.info.pages);
+                setCharacters(res);
+            }
+
+        }, (error) => {
+            setLoading(true);
+            setError(error)
+        })
+        /* using axios
         const fetchCharacters = async () => {
 
-            setLoading(true);
+            
             const res = await axios.get(url);
             setPageNumber(res.data.info.pages);
 
             setCharacters(res.data);
             setLoading(false);
         }
-        fetchCharacters();
+        fetchCharacters();*/
+
     }, [url, currentPage]);
 
-    return (
-        <div className="container mt-5">
-            <h1 className="text-primary mb-3">Characters</h1>
-            <FilterCharacters setCurrentPage={setCurrentPage} setGender={setGender} setStatus={setStatus} url={url} setSpecies={setSpecies} />
-            <CharacterList characters={characters.results} loading={loading} />
-            <Pagination currentPage={currentPage} paginate={paginate} url={url} number={pageNumber} />
-        </div>
-    )
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    } else if (!loading) {
+        return <div>Loading...</div>;
+    } else {
+        return (
+            <div className="page__characters section">
+                <div className="container">
+                    <h1 className="text-primary">Characters</h1>
+                    <FilterCharacters setCurrentPage={setCurrentPage} setGender={setGender} setStatus={setStatus} url={url} setSpecies={setSpecies} />
+                    <CharacterList characters={characters.results} loading={loading} />
+                    <Pagination currentPage={currentPage} paginate={paginate} url={url} number={pageNumber} />
+                </div>
+            </div>
+
+        );
+    }
 }

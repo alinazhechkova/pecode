@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { LocationsList } from '../../components/locationPage/LocationsList';
 import { Pagination } from '../../components/Pagination';
 import { FilterLocation } from '../../components/locationPage/FilterLocation';
@@ -12,6 +11,7 @@ export const Locations = () => {
     const [name, setName] = useState({});
     const [type, setType] = useState({});
     const [dimension, setDimension] = useState({});
+    const [error, setError] = useState(null)
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
@@ -23,26 +23,36 @@ export const Locations = () => {
         }
         return `https://rickandmortyapi.com/api/location/?` + addParams.join('&');
     }
-    let url = parsingQuery()
+    let url = parsingQuery();
     useEffect(() => {
-        const fetchCharacters = async () => {
-
+        fetch(url).then(res => res.json()).then((res) => {
             setLoading(true);
-            const res = await axios.get(url);
-            setPageNumber(res.data.info.pages);
-            console.log(res.data)
-            setLocations(res.data);
-            setLoading(false);
-        }
-        fetchCharacters();
+            setPageNumber(res.info.pages);
+            setLocations(res);
+        }, (error) => {
+            setLoading(true);
+            setError(error)
+        })
+
+
     }, [url, currentPage]);
 
-    return (
-        <div className="container mt-5">
-            <h1 className="text-primary mb-3">Locations:</h1>
-            <FilterLocation setName={setName} setDimension={setDimension} setCurrentPage={setCurrentPage} setType={setType} />
-            <LocationsList locations={locations.results} loading={loading} />
-            <Pagination currentPage={currentPage} paginate={paginate} url={url} number={pageNumber} />
-        </div>
-    )
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    } else if (!loading) {
+        return <div>Loading...</div>;
+    } else {
+        return (
+            <section className="page__locations section">
+                <div className="container">
+                    <h1 className="text-primary">Locations:</h1>
+                    <FilterLocation setName={setName} setDimension={setDimension} setCurrentPage={setCurrentPage} setType={setType} />
+                    <LocationsList locations={locations.results} loading={loading} />
+                    <Pagination currentPage={currentPage} paginate={paginate} url={url} number={pageNumber} />
+                </div>
+            </section>
+
+        );
+    }
+
 }

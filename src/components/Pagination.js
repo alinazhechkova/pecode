@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, Fragment } from 'react';
 import './style.scss';
 export const Pagination = ({ paginate, number, currentPage }) => {
     const pageNumber = [];
@@ -10,15 +9,7 @@ export const Pagination = ({ paginate, number, currentPage }) => {
     for (let i = 1; i <= number; i++) {
         pageNumber.push(i)
     }
-    const render = pageNumber.map(number => {
-        if (number > minPageNumberLimit && number < maxPageNumberLimit + 1) {
-            return (<li key={number} className="page-item" >
-                <a href={`!#`} className="page-link" >
-                    {number}
-                </a>
-            </li>)
-        }
-    })
+
     const handleNextBtn = (e) => {
         e.preventDefault()
         paginate(currentPage + 1);
@@ -39,19 +30,27 @@ export const Pagination = ({ paginate, number, currentPage }) => {
             paginate(1);
             return;
         };
-        if ((currentPage - 1) % pageNumberLimit == 0) {
+        if ((currentPage - 1) % pageNumberLimit === 0) {
             setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
             setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit)
         }
     }
-    if (currentPage > maxPageNumberLimit) {
 
+    const prev = () => {
+        if (currentPage > pageNumberLimit) {
+            return (<Fragment><li className="page-item"><a href="!#" onClick={handlePrevBtn} className="page-link">Prev</a></li>
+                <li className="page-item"><a href="!#" onClick={handlePrevBtn} className="page-link">...</a></li>
+            </Fragment>)
+        } else {
+            return (<li className="page-item"><a href="!#" onClick={handlePrevBtn} className="page-link">Prev</a></li>)
+        }
     };
+    const prevBtn = prev()
+
     return (
         <nav aria-label="Page navigation" className="character__navigation">
             <ul className="pagination">
-
-                <li className="page-item"><a href="!#" onClick={handlePrevBtn} className="page-link">Prev</a></li>
+                {prevBtn}
                 {pageNumber.map(number => {
                     if (number > minPageNumberLimit && number < maxPageNumberLimit + 1) {
                         return (<li key={number} className="page-item" >
@@ -59,7 +58,7 @@ export const Pagination = ({ paginate, number, currentPage }) => {
                                 e.preventDefault();
                                 paginate(number);
                             }} href={`!#`} className={
-                                (currentPage == number) ? 'page-link active' : 'page-link'
+                                (currentPage === number) ? 'page-link active' : 'page-link'
                             } >
                                 {number}
                             </a>

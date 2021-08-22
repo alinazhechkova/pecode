@@ -1,22 +1,35 @@
-import React, { Fragment, useState } from 'react';
-export const AddWatchItem = () => {
-    const [list, setList] = useState({});
-    const [count, setCount] = useState(0);
-    let res = [];
+import React, { Fragment } from 'react';
+export const AddWatchItem = ({ status, setStatus, setInputText, inputText, setList, list }) => {
     const handlerSubmit = (e) => {
         e.preventDefault();
-        const input = document.getElementById('episodeName')
-        setCount(prev => prev + 1)
-        setList({ name: input.value, id: count });
-        res.push(list)
-        console.log(list, res);
+        if (!inputText) return;
+        setList([
+            ...list, { episodeName: inputText, completed: false, id: Math.random() * 1000 },
+        ]);
+        setInputText('');
     }
+
+    const handlerInput = (e) => {
+        setInputText(e.target.value)
+    }
+
+    const changeHandler = (e) => {
+        setStatus(e.target.value)
+    }
+
     return (
         <Fragment>
-            <form onSubmit={handlerSubmit}>
-                <div class="input-group mb-3">
-                    <input type="text" id="episodeName" className="form-control" placeholder="Recipient's username" aria-label="Enter the episode name" aria-describedby="button-addon2" />
-                    <button className="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>
+            <form onSubmit={handlerSubmit} className="watch__form form">
+                <div className="form__input-group">
+                    <input value={inputText} type="text" onChange={handlerInput} id="episodeName" className="form__input" placeholder="Enter the episode name" aria-label="Enter the episode name" />
+                    <button className="btn btn-outline-primary form__add-btn" type="submit" >Add</button>
+                </div>
+                <div className="form__select filter-select" onChange={changeHandler}>
+                    <select name="watch" id="filterWatch">
+                        <option value="all">All</option>
+                        <option value="watched">Watched</option>
+                        <option value="unwatched">Unwatched</option>
+                    </select>
                 </div>
             </form>
         </Fragment>

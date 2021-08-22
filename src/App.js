@@ -6,6 +6,7 @@ import { Locations } from './pages/locations/Locations';
 import { Watch } from './pages/watchList/Watch';
 import { Navbar } from './components/Navbar'
 import './components/style.scss'
+import { Footer } from './components/Footer';
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ function App() {
           <Route path={'/watch'} component={Watch} />
         </Switch>
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }
