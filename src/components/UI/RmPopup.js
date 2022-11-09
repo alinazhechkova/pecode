@@ -1,23 +1,30 @@
-import React from 'react';
+import React from 'react'
 
 export const RmPopup = ({ main, header, window, setWindow }) => {
     const closePopup = (e) => {
         e.stopPropagation()
-        setWindow(window => !window)
+        setWindow((window) => !window)
     }
     return (
-        <div className={`details-window window ${window ? 'active' : null}`} onClick={closePopup}>
+        <div
+            className={`details-window window ${window ? 'active' : null}`}
+            onClick={closePopup}
+        >
             <div className="window__wrap" onClick={(e) => e.stopPropagation()}>
                 <div className="window__header">
                     <h3 className="window__title">{header}</h3>
 
-                    <button type="button" class="window__close" onClick={closePopup} aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button
+                        type="button"
+                        class="window__close"
+                        onClick={closePopup}
+                        aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div className="window__main">
-                    {main}
-                </div>
+                <div className="window__main">{main}</div>
             </div>
         </div>
     )
 }
-

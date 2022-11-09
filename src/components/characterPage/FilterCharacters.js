@@ -1,45 +1,32 @@
-import React, { Fragment } from "react";
-import { FilterGender } from "./filterGender";
-import { FilterStatus } from "./FilterStatus";
+import React from 'react'
+import Input from '../UI/common/Input'
+import Select from '../UI/common/Select'
 
-export const FilterCharacters = ({
-  setSpecies,
-  setGender,
-  setStatus,
-  setCurrentPage,
-  url,
-}) => {
-  return (
-    <Fragment>
-      <label className="filter-label">
-        Species:
-        <input
-          type="text"
-          placeholder="Choose species"
-          id="name"
-          className="filter-input"
-          onInput={(e) => {
-            setSpecies({ species: e.target.value });
-            setCurrentPage(1);
-          }}
+const FilterCharacters = ({ filters, setFilters }) => (
+    <>
+        <Input
+            value={filters.species}
+            onChange={(e) => {
+                setFilters({ ...filters, species: e.target.value })
+            }}
+            placeholder="Choose species"
+            label="Species:"
         />
-      </label>
-      <label className="filter-label">
-        Gender:
-        <FilterGender
-          setCurrentPage={setCurrentPage}
-          setGender={setGender}
-          url={url}
+        <Select
+            label="Gender:"
+            placeholder="Choose gender"
+            onChange={(e) => {
+                setFilters({ ...filters, gender: e.target.value })
+            }}
         />
-      </label>
-      <label className="filter-label">
-        Status:
-        <FilterStatus
-          setCurrentPage={setCurrentPage}
-          setStatus={setStatus}
-          url={url}
+        <Select
+            label="Status:"
+            placeholder="Choose status"
+            onChange={(e) => {
+                setFilters({ ...filters, status: e.target.value })
+            }}
         />
-      </label>
-    </Fragment>
-  );
-};
+    </>
+)
+
+export default FilterCharacters
