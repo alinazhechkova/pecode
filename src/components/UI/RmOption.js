@@ -1,7 +1,4 @@
-import React from 'react';
+import React from 'react'
 export const RmOption = ({ option }) => {
-    return (
-        <option value={option}>{option}</option>
-
-    )
+    return <option value={option}>{option}</option>
 }
