@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import CharacterList from '../../components/characterPage/CharacterList'
 import Pagination from '../../components/Pagination'
-import { FilterCharacters } from '../../components/characterPage/FilterCharacters'
+import FilterCharacters from '../../components/characterPage/FilterCharacters'
 
 import parsingQuery from '../../utils/parsingQuery'
 import api from '../../services'
@@ -25,8 +25,6 @@ const Characters = () => {
     const getCharacters = () => {
         setIsLoading(true)
 
-        if (!url) return
-
         api.get(url)
             .then((res) => {
                 setIsLoading(false)
@@ -39,6 +37,8 @@ const Characters = () => {
     }
 
     useEffect(() => {
+        if (!url) return
+
         getCharacters()
     }, [url])
 

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import './style.scss'
 
 const PAGE_NUMBER_LIMIT = 10
@@ -15,6 +15,7 @@ const Pagination = ({ paginate, number, currentPage }) => {
     const handleNextBtn = (e) => {
         e.preventDefault()
         paginate(currentPage + 1)
+
         if (currentPage === pageNumber.length) {
             paginate(1)
             setMinPageNumberLimit(0)

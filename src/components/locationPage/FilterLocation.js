@@ -1,50 +1,41 @@
 import React from 'react'
-import { FilterType } from './FilterType'
+import { DIMENSION_OPTIONS, LOCATION_TYPE } from '../../constants'
 
-export const FilterLocation = ({
-    setDimension,
-    setName,
-    setCurrentPage,
-    setType,
-}) => {
-    const handlerInput = (e) => {
-        setName({ name: e.target.value })
-        setCurrentPage(1)
-    }
-    const handlerDimension = (e) => {
-        setDimension({ dimension: e.target.value })
-        setCurrentPage(1)
-    }
+import Input from '../UI/common/Input'
+import Select from '../UI/common/Select'
 
-    return (
-        <>
-            <label className="filter-label">
-                Name:
-                <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Name"
-                    id="name"
-                    onInput={handlerInput}
-                />
-            </label>
-            <label className="filter-label">
-                Type:
-                <FilterType
-                    setType={setType}
-                    setCurrentPage={setCurrentPage}
-                />{' '}
-            </label>
-            <label className="filter-label">
-                Dimension:
-                <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="Dimension"
-                    id="dimension"
-                    onInput={handlerDimension}
-                />
-            </label>
-        </>
-    )
-}
+const FilterLocation = ({ filters, setFilters }) => (
+    <>
+        <Input
+            label="Name:"
+            onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+            placeholder="Name"
+        />
+        <Select
+            label="Dimension:"
+            placeholder="Dimension"
+            onChange={(e) =>
+                setFilters({ ...filters, dimension: e.target.value })
+            }
+        >
+            {DIMENSION_OPTIONS.map((dimension) => (
+                <option value={dimension} key={dimension}>
+                    {dimension}
+                </option>
+            ))}
+        </Select>
+        <Select
+            label="Type:"
+            placeholder="Choose type:"
+            onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+        >
+            {LOCATION_TYPE.map((location) => (
+                <option value={location} key={location}>
+                    {location}
+                </option>
+            ))}
+        </Select>
+    </>
+)
+
+export default FilterLocation

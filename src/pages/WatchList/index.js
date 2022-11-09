@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { AddWatchItem } from '../../components/watchPage/AddWatchItem'
 import { WatchList } from '../../components/watchPage/WatchList'
+import { getListFromStorage, saveListToStorage } from '../../utils/listStorage'
 
 const Watch = () => {
     const [inputText, setInputText] = useState('')
     const [list, setList] = useState([])
     const [status, setStatus] = useState('all')
     const [filteredList, setFilteredList] = useState([])
-
-    const saveListToStorage = () => {
-        localStorage.setItem('watchList', JSON.stringify(list))
-    }
-
-    const getListFromStorage = () => {
-        if (localStorage.getItem('watchlist') === null) {
-            localStorage.setItem('watchlist', JSON.stringify([]))
-        } else {
-            let watchlistLocal = localStorage.getItem(
-                'watchList',
-                JSON.stringify(list)
-            )
-            setList(JSON.parse(watchlistLocal))
-        }
-    }
 
     useEffect(() => {
         getListFromStorage()
