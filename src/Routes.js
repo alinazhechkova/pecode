@@ -1,8 +1,8 @@
 import { Route } from 'react-router-dom'
-import { Characters } from './pages/Characters'
-import { Episodes } from './pages/Episodes'
-import { Locations } from './pages/Locations/Locations'
-import { Watch } from './pages/WatchList'
+import Characters from './pages/Characters'
+import Episodes from './pages/Episodes'
+import Locations from './pages/Locations'
+import Watch from './pages/WatchList'
 
 const Routes = () => (
     <>

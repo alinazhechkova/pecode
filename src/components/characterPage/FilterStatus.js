@@ -1,9 +1,8 @@
 import React from 'react'
 
-export const FilterStatus = ({ setStatus, status, setCurrentPage, url }) => {
+export const FilterStatus = ({ setStatus, status, setCurrentPage }) => {
     const handleChange = (e) => {
-        setStatus({ status: e.target.value })
-        setCurrentPage(1)
+        setStatus(e.target.value)
     }
 
     return (

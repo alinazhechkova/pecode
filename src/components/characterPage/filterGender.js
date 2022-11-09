@@ -1,10 +1,10 @@
 import React from 'react'
 
-export const FilterGender = ({ setGender, setCurrentPage }) => {
+export const FilterGender = ({ setGender }) => {
     const handleChange = (e) => {
-        setGender({ gender: e.target.value })
-        setCurrentPage(1)
+        setGender(e.target.value)
     }
+
     return (
         <div className="filter-select" onChange={handleChange}>
             <select>

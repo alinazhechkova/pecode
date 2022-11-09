@@ -1,79 +1,75 @@
-import React, { useState, useEffect } from 'react'
-import { CharacterList } from '../../components/characterPage/CharacterList'
-import { Pagination } from '../../components/Pagination'
+import React, { useState, useEffect, useMemo } from 'react'
+import CharacterList from '../../components/characterPage/CharacterList'
+import Pagination from '../../components/Pagination'
 import { FilterCharacters } from '../../components/characterPage/FilterCharacters'
 
 import parsingQuery from '../../utils/parsingQuery'
+import api from '../../services'
 
 const Characters = () => {
     const [characters, setCharacters] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [pageNumber, setPageNumber] = useState(34)
-    const [gender, setGender] = useState({})
-    const [status, setStatus] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
-    const [species, setSpecies] = useState({})
+    const [page, setPage] = useState(1)
 
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber)
-    }
+    const [filters, setFilters] = useState({
+        gender: '',
+        status: '',
+    })
 
-    let filters = Object.assign({ page: currentPage }, gender, status, species)
-
-    const url = parsingQuery(
-        filters,
-        'https://rickandmortyapi.com/api/character/?'
+    const url = useMemo(
+        () => parsingQuery({ page, ...filters }, '/character/?'),
+        [filters, page]
     )
 
+    const getCharacters = () => {
+        setIsLoading(true)
+
+        if (!url) return
+
+        api.get(url)
+            .then((res) => {
+                setIsLoading(false)
+                setCharacters(res.data)
+            })
+            .catch((err) => {
+                setError(err)
+                setIsLoading(false)
+            })
+    }
+
     useEffect(() => {
-        fetch(url)
-            .then((res) => res.json())
-            .then(
-                (res) => {
-                    if (!res.error) {
-                        setLoading(true)
-                        setPageNumber(res.info.pages)
-                        setCharacters(res)
-                    }
-                },
-                (error) => {
-                    setLoading(true)
-                    setError(error)
-                }
-            )
-    }, [url, currentPage])
+        getCharacters()
+    }, [url])
 
     if (error) {
         return <div>Error: {error.message}</div>
-    } else if (!loading) {
+    } else if (isLoading) {
         return <div>Loading...</div>
-    } else {
-        return (
-            <div className="page__characters section">
-                <div className="container">
-                    <h1 className="text-primary">Characters</h1>
-                    <FilterCharacters
-                        setCurrentPage={setCurrentPage}
-                        setGender={setGender}
-                        setStatus={setStatus}
-                        url={url}
-                        setSpecies={setSpecies}
-                    />
-                    <CharacterList
-                        characters={characters.results}
-                        loading={loading}
-                    />
-                    <Pagination
-                        currentPage={currentPage}
-                        paginate={paginate}
-                        url={url}
-                        number={pageNumber}
-                    />
-                </div>
-            </div>
-        )
     }
+
+    return (
+        <div className="page__characters section">
+            <div className="container">
+                <h1 className="text-primary">Characters</h1>
+                <FilterCharacters
+                    filters={filters}
+                    setFilters={(filters) => {
+                        setFilters(filters)
+                        setPage(1)
+                    }}
+                />
+                {characters.results?.length && (
+                    <CharacterList characters={characters.results} />
+                )}
+                <Pagination
+                    currentPage={page}
+                    paginate={setPage}
+                    number={characters?.info?.pages || 1}
+                />
+            </div>
+        </div>
+    )
 }
 
 export default Characters

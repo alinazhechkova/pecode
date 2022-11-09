@@ -2,7 +2,8 @@ import React, { useState, Fragment } from 'react'
 import './style.scss'
 
 const PAGE_NUMBER_LIMIT = 10
-export const Pagination = ({ paginate, number, currentPage }) => {
+
+const Pagination = ({ paginate, number, currentPage }) => {
     const pageNumber = []
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(10)
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
@@ -24,6 +25,7 @@ export const Pagination = ({ paginate, number, currentPage }) => {
             setMinPageNumberLimit(minPageNumberLimit + PAGE_NUMBER_LIMIT)
         }
     }
+
     const handlePrevBtn = (e) => {
         e.preventDefault()
         paginate(currentPage - 1)
@@ -37,19 +39,15 @@ export const Pagination = ({ paginate, number, currentPage }) => {
         }
     }
 
-    const prev = () => {
-        if (currentPage > PAGE_NUMBER_LIMIT) {
-            return (
-                <Fragment>
-                    <li className="page-item">
-                        <a
-                            href="!#"
-                            onClick={handlePrevBtn}
-                            className="page-link"
-                        >
-                            Prev
-                        </a>
-                    </li>
+    return (
+        <nav aria-label="Page navigation" className="character__navigation">
+            <ul className="pagination">
+                <li className="page-item">
+                    <a href="!#" onClick={handlePrevBtn} className="page-link">
+                        Prev
+                    </a>
+                </li>
+                {currentPage > PAGE_NUMBER_LIMIT && (
                     <li className="page-item">
                         <a
                             href="!#"
@@ -59,24 +57,7 @@ export const Pagination = ({ paginate, number, currentPage }) => {
                             ...
                         </a>
                     </li>
-                </Fragment>
-            )
-        } else {
-            return (
-                <li className="page-item">
-                    <a href="!#" onClick={handlePrevBtn} className="page-link">
-                        Prev
-                    </a>
-                </li>
-            )
-        }
-    }
-    const prevBtn = prev()
-
-    return (
-        <nav aria-label="Page navigation" className="character__navigation">
-            <ul className="pagination">
-                {prevBtn}
+                )}
                 {pageNumber.map((number) => {
                     if (
                         number > minPageNumberLimit &&
@@ -84,12 +65,11 @@ export const Pagination = ({ paginate, number, currentPage }) => {
                     ) {
                         return (
                             <li key={number} className="page-item">
-                                <a
+                                <button
                                     onClick={(e) => {
                                         e.preventDefault()
                                         paginate(number)
                                     }}
-                                    href={`!#`}
                                     className={
                                         currentPage === number
                                             ? 'page-link active'
@@ -97,17 +77,19 @@ export const Pagination = ({ paginate, number, currentPage }) => {
                                     }
                                 >
                                     {number}
-                                </a>
+                                </button>
                             </li>
                         )
                     }
                 })}
                 <li className="page-item">
-                    <a href="!#" onClick={handleNextBtn} className="page-link">
+                    <button onClick={handleNextBtn} className="page-link">
                         Next
-                    </a>
+                    </button>
                 </li>
             </ul>
         </nav>
     )
 }
+
+export default Pagination

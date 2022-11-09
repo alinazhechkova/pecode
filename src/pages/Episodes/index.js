@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { EpisodeList } from '../../components/episodePage/EpisodeList'
-import { Pagination } from '../../components/Pagination'
+import Pagination from '../../components/Pagination'
 import { FilterEpisode } from '../../components/episodePage/FilterEpisode'
 
 import parsingQuery from '../../utils/parsingQuery'

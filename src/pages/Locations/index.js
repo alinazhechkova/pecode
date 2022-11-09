@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { LocationsList } from '../../components/locationPage/LocationsList'
-import { Pagination } from '../../components/Pagination'
+import Pagination from '../../components/Pagination'
 import { FilterLocation } from '../../components/locationPage/FilterLocation'
 
 import parsingQuery from '../../utils/parsingQuery'

@@ -2,13 +2,7 @@ import React, { Fragment } from 'react'
 import { FilterGender } from './filterGender'
 import { FilterStatus } from './FilterStatus'
 
-export const FilterCharacters = ({
-    setSpecies,
-    setGender,
-    setStatus,
-    setCurrentPage,
-    url,
-}) => {
+export const FilterCharacters = ({ filters, setFilters, url }) => {
     return (
         <Fragment>
             <label className="filter-label">
@@ -19,25 +13,22 @@ export const FilterCharacters = ({
                     id="name"
                     className="filter-input"
                     onInput={(e) => {
-                        setSpecies({ species: e.target.value })
-                        setCurrentPage(1)
+                        setFilters({ ...filters, species: e.target.value })
                     }}
                 />
             </label>
             <label className="filter-label">
                 Gender:
                 <FilterGender
-                    setCurrentPage={setCurrentPage}
-                    setGender={setGender}
-                    url={url}
+                    status={filters.gender}
+                    setGender={(gender) => setFilters({ ...filters, gender })}
                 />
             </label>
             <label className="filter-label">
                 Status:
                 <FilterStatus
-                    setCurrentPage={setCurrentPage}
-                    setStatus={setStatus}
-                    url={url}
+                    status={filters.status}
+                    setStatus={(status) => setFilters({ ...filters, status })}
                 />
             </label>
         </Fragment>
