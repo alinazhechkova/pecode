@@ -1,4 +1,5 @@
 import React from 'react'
+import { GENDER_TYPE, STATUS_TYPE } from '../../constants'
 import Input from '../UI/common/Input'
 import Select from '../UI/common/Select'
 
@@ -15,12 +16,14 @@ const FilterCharacters = ({ filters, setFilters }) => (
         <Select
             label="Gender:"
             placeholder="Choose gender"
+            options={GENDER_TYPE}
             onChange={(e) => {
                 setFilters({ ...filters, gender: e.target.value })
             }}
         />
         <Select
             label="Status:"
+            options={STATUS_TYPE}
             placeholder="Choose status"
             onChange={(e) => {
                 setFilters({ ...filters, status: e.target.value })

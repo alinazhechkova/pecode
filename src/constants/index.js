@@ -32,3 +32,7 @@ export const LOCATION_TYPE = [
     'Game',
     'unknown',
 ]
+
+export const GENDER_TYPE = ['Male', 'Female', 'Genderless', 'Unknown']
+
+export const STATUS_TYPE = ['Alive', 'Dead', 'Unknown']
