@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch } from 'react-router-dom'
-import { Navbar } from './components/Navbar'
+import Navbar from './components/Navbar'
 import './components/style.scss'
-import { Footer } from './components/Footer'
+import Footer from './components/Footer'
 import Routes from './Routes'
 
 function App() {

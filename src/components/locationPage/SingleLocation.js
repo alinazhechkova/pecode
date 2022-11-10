@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SingleLocation = ({ location }) => (
+const SingleLocation = ({ location }) => (
     <div className="location">
         <div className="location__wrap">
             <div className="location__content">
@@ -23,3 +23,5 @@ export const SingleLocation = ({ location }) => (
         </div>
     </div>
 )
+
+export default SingleLocation

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SingleEpisode = ({ item }) => (
+const SingleEpisode = ({ item }) => (
     <div className="episode">
         <div className="episode__wrap">
             <h3>{item.name}</h3>
@@ -15,3 +15,5 @@ export const SingleEpisode = ({ item }) => (
         </div>
     </div>
 )
+
+export default SingleEpisode

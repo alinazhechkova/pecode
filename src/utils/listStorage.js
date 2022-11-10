@@ -3,8 +3,8 @@ export const saveListToStorage = (list) => {
 }
 
 export const getListFromStorage = (list) => {
-    if (localStorage.getItem('watchlist') === null) {
-        localStorage.setItem('watchlist', JSON.stringify([]))
+    if (localStorage.getItem('watchList') === null) {
+        localStorage.setItem('watchList', JSON.stringify([]))
     } else {
         const watchlistLocal = localStorage.getItem(
             'watchList',

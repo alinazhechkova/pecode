@@ -1,31 +1,25 @@
 import React from 'react'
 
-export const AddWatchItem = ({
-    setStatus,
-    setInputText,
-    inputText,
-    setList,
-    list,
-}) => {
+const AddWatchItem = ({ setStatus, setInputText, inputText, addItem }) => {
     const handlerSubmit = (e) => {
         e.preventDefault()
-        if (!inputText) return
-        setList([
-            ...list,
-            {
-                episodeName: inputText,
-                completed: false,
-                id: Math.random() * 1000,
-            },
-        ])
+        if (!inputText.trim()) return
+
+        const newItem = {
+            episodeName: inputText,
+            completed: false,
+            id: Math.random() * 1000,
+        }
+
+        addItem(newItem)
         setInputText('')
     }
 
-    const handlerInput = (e) => {
+    const onChange = (e) => {
         setInputText(e.target.value)
     }
 
-    const changeHandler = (e) => {
+    const onStatusChange = (e) => {
         setStatus(e.target.value)
     }
 
@@ -36,7 +30,7 @@ export const AddWatchItem = ({
                     <input
                         value={inputText}
                         type="text"
-                        onChange={handlerInput}
+                        onChange={onChange}
                         id="episodeName"
                         className="form__input"
                         placeholder="Enter the episode name"
@@ -51,7 +45,7 @@ export const AddWatchItem = ({
                 </div>
                 <div
                     className="form__select filter-select"
-                    onChange={changeHandler}
+                    onChange={onStatusChange}
                 >
                     <select name="watch" id="filterWatch">
                         <option value="all">All</option>
@@ -63,3 +57,5 @@ export const AddWatchItem = ({
         </>
     )
 }
+
+export default AddWatchItem

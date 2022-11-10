@@ -1,5 +1,5 @@
 import React from 'react'
-import { SingleLocation } from './SingleLocation'
+import SingleLocation from './SingleLocation'
 
 const LocationsList = ({ locations }) => (
     <div className="row mb-4 mx-auto mt-4">

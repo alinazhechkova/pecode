@@ -1,4 +1,4 @@
-const Select = ({ children, onChange, label, placeholder }) => (
+const Select = ({ options, onChange, label, placeholder }) => (
     <label className="filter-label">
         {label}
         <div className="filter-select" onChange={onChange}>
@@ -6,7 +6,11 @@ const Select = ({ children, onChange, label, placeholder }) => (
                 <option defaultValue value="">
                     {placeholder}
                 </option>
-                {children}
+                {options.map((option) => (
+                    <option value={option} key={option}>
+                        {option}
+                    </option>
+                ))}
             </select>
         </div>
     </label>

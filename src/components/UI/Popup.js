@@ -1,10 +1,11 @@
 import React from 'react'
 
-export const RmPopup = ({ main, header, window, setWindow }) => {
+const Popup = ({ children, header, window, setWindow }) => {
     const closePopup = (e) => {
         e.stopPropagation()
         setWindow((window) => !window)
     }
+
     return (
         <div
             className={`details-window window ${window ? 'active' : null}`}
@@ -23,8 +24,10 @@ export const RmPopup = ({ main, header, window, setWindow }) => {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div className="window__main">{main}</div>
+                <div className="window__main">{children}</div>
             </div>
         </div>
     )
 }
+
+export default Popup
