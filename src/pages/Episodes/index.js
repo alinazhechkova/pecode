@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { EpisodeList } from '../../components/episodePage/EpisodeList'
+import EpisodeList from '../../components/episodePage/EpisodeList'
 import Pagination from '../../components/Pagination'
 
 import parsingQuery from '../../utils/parsingQuery'

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-export const Navbar = () => {
+const Navbar = () => {
     const [active, setActive] = useState(false)
+
     const openMenu = () => {
         document.body.classList.toggle('fixed')
         setActive(!active)
@@ -66,25 +67,10 @@ export const Navbar = () => {
                             </NavLink>
                         </li>
                     </ul>
-                    <ul className="media">
-                        <li className="media-item">
-                            <a href="#" className="media-link">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                        </li>
-                        <li className="media-item">
-                            <a href="#" className="media-link">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li className="media-item">
-                            <a href="#" className="media-link">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </nav>
             </div>
         </header>
     )
 }
+
+export default Navbar

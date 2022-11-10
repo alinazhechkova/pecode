@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { AddWatchItem } from '../../components/watchPage/AddWatchItem'
-import { WatchList } from '../../components/watchPage/WatchList'
+import AddWatchItem from '../../components/watchPage/AddWatchItem'
+import WatchList from '../../components/watchPage/WatchList'
 import { getListFromStorage, saveListToStorage } from '../../utils/listStorage'
 
-const Watch = () => {
+const WatchPage = () => {
     const [inputText, setInputText] = useState('')
     const [list, setList] = useState([])
     const [status, setStatus] = useState('all')
@@ -39,8 +39,7 @@ const Watch = () => {
                 <AddWatchItem
                     status={status}
                     setStatus={setStatus}
-                    list={list}
-                    setList={setList}
+                    addItem={(item) => setList([...list, item])}
                     setInputText={setInputText}
                     inputText={inputText}
                 />
@@ -50,4 +49,4 @@ const Watch = () => {
     )
 }
 
-export default Watch
+export default WatchPage

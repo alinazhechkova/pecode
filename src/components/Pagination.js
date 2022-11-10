@@ -5,7 +5,9 @@ const PAGE_NUMBER_LIMIT = 10
 
 const Pagination = ({ paginate, number, currentPage }) => {
     const pageNumber = []
-    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(10)
+    const [maxPageNumberLimit, setMaxPageNumberLimit] =
+        useState(PAGE_NUMBER_LIMIT)
+
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
 
     for (let i = 1; i <= number; i++) {
@@ -82,6 +84,8 @@ const Pagination = ({ paginate, number, currentPage }) => {
                             </li>
                         )
                     }
+
+                    return null
                 })}
                 <li className="page-item">
                     <button onClick={handleNextBtn} className="page-link">

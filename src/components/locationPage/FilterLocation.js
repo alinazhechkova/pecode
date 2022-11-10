@@ -17,24 +17,14 @@ const FilterLocation = ({ filters, setFilters }) => (
             onChange={(e) =>
                 setFilters({ ...filters, dimension: e.target.value })
             }
-        >
-            {DIMENSION_OPTIONS.map((dimension) => (
-                <option value={dimension} key={dimension}>
-                    {dimension}
-                </option>
-            ))}
-        </Select>
+            options={DIMENSION_OPTIONS}
+        />
         <Select
             label="Type:"
             placeholder="Choose type:"
             onChange={(e) => setFilters({ ...filters, type: e.target.value })}
-        >
-            {LOCATION_TYPE.map((location) => (
-                <option value={location} key={location}>
-                    {location}
-                </option>
-            ))}
-        </Select>
+            options={LOCATION_TYPE}
+        />
     </>
 )
 

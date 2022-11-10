@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-export const Footer = () => (
+const Footer = () => (
     <footer class="page__footer footer">
         <div className="nav-container container">
             <p className="logo">
@@ -13,3 +13,5 @@ export const Footer = () => (
         </div>
     </footer>
 )
+
+export default Footer
