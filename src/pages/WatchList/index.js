@@ -9,10 +9,6 @@ const WatchPage = () => {
     const [status, setStatus] = useState('all')
     const [filteredList, setFilteredList] = useState([])
 
-    useEffect(() => {
-        getListFromStorage()
-    }, [])
-
     const filterHandler = () => {
         switch (status) {
             case 'watched':
@@ -28,9 +24,17 @@ const WatchPage = () => {
     }
 
     useEffect(() => {
+        const list = getListFromStorage()
+        setList(list)
+    }, [])
+
+    useEffect(() => {
         filterHandler()
-        saveListToStorage()
-    }, [list, status])
+    }, [status])
+
+    useEffect(() => {
+        saveListToStorage(list)
+    }, [list])
 
     return (
         <section className="page__watchlist section">
